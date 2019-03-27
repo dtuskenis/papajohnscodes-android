@@ -16,13 +16,13 @@ class PapaJohnsCodesAdapter(private val onItemSelected: (PapaJohnsCode) -> Unit)
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(parent.context)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(parent)
 
     override fun getItemCount(): Int = data.size
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) = viewHolder.updateWith(data[position])
 
-    inner class ViewHolder(context: Context): RecyclerView.ViewHolder(context.inflate(R.layout.view_code)) {
+    inner class ViewHolder(parent: ViewGroup): RecyclerView.ViewHolder(parent.inflate(R.layout.view_code)) {
 
         private val codeView = itemView.code
         private val descriptionView = itemView.description
@@ -36,6 +36,6 @@ class PapaJohnsCodesAdapter(private val onItemSelected: (PapaJohnsCode) -> Unit)
     }
 
     companion object {
-        private fun Context.inflate(@LayoutRes layoutId: Int) = LayoutInflater.from(this).inflate(layoutId, null)
+        private fun ViewGroup.inflate(@LayoutRes layoutId: Int) = LayoutInflater.from(context).inflate(layoutId, this, false)
     }
 }
