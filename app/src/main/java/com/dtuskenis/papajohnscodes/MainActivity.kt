@@ -55,7 +55,7 @@ class MainActivity: AppCompatActivity() {
     }
 
     private fun copyCodeToClipboard(code: PapaJohnsCode) {
-        clipboard.primaryClip = ClipData.newPlainText(getString(R.string.clipboard_label), code.code)
+        clipboard.primaryClip = ClipData.newPlainText(getString(R.string.clipboard_label), code.rawValue)
         toast(getString(R.string.clipboard_toast))
     }
 

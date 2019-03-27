@@ -28,7 +28,7 @@ class PapaJohnsCodesAdapter(private val onItemSelected: (PapaJohnsCode) -> Unit)
         private val descriptionView = itemView.description
 
         fun updateWith(code: PapaJohnsCode) {
-            codeView.text = code.code
+            codeView.text = code.rawValue
             descriptionView.text = code.description
 
             itemView.setOnClickListener { onItemSelected(code) }
