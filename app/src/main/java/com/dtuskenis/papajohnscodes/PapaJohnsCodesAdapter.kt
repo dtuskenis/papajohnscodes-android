@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.view_code.view.*
 
-class PapaJohnsCodesAdapter: RecyclerView.Adapter<PapaJohnsCodesAdapter.ViewHolder>() {
+class PapaJohnsCodesAdapter(private val onItemSelected: (PapaJohnsCode) -> Unit): RecyclerView.Adapter<PapaJohnsCodesAdapter.ViewHolder>() {
 
     var data: List<PapaJohnsCode> = emptyList()
     get() = field.toList()
@@ -22,7 +22,7 @@ class PapaJohnsCodesAdapter: RecyclerView.Adapter<PapaJohnsCodesAdapter.ViewHold
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) = viewHolder.updateWith(data[position])
 
-    class ViewHolder(context: Context): RecyclerView.ViewHolder(context.inflate(R.layout.view_code)) {
+    inner class ViewHolder(context: Context): RecyclerView.ViewHolder(context.inflate(R.layout.view_code)) {
 
         private val codeView = itemView.code
         private val descriptionView = itemView.description
@@ -30,6 +30,8 @@ class PapaJohnsCodesAdapter: RecyclerView.Adapter<PapaJohnsCodesAdapter.ViewHold
         fun updateWith(code: PapaJohnsCode) {
             codeView.text = code.code
             descriptionView.text = code.description
+
+            itemView.setOnClickListener { onItemSelected(code) }
         }
     }
 

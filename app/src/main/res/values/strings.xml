@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Papa John\'s Codes</string>
+
+    <string name="clipboard_label">Papa John\'s promo code</string>
+    <string name="clipboard_toast">Copied to clipboard!</string>
 </resources>
