@@ -29,7 +29,7 @@ class PapaJohnsCodesAdapter: RecyclerView.Adapter<PapaJohnsCodesAdapter.ViewHold
 
         fun updateWith(code: PapaJohnsCode) {
             codeView.text = code.code
-            descriptionView.text = code.name
+            descriptionView.text = code.description
         }
     }
 
