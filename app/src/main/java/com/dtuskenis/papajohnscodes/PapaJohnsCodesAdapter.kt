@@ -1,10 +1,9 @@
 package com.dtuskenis.papajohnscodes
 
-import android.content.Context
-import android.support.annotation.LayoutRes
-import android.support.v7.widget.RecyclerView
+import androidx.annotation.LayoutRes
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_code.view.*
 
 class PapaJohnsCodesAdapter(private val onItemSelected: (PapaJohnsCode) -> Unit): RecyclerView.Adapter<PapaJohnsCodesAdapter.ViewHolder>() {
