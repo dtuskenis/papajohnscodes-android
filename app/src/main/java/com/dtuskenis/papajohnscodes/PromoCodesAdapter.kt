@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_code.view.*
 
-class PapaJohnsCodesAdapter(private val onItemSelected: (PapaJohnsCode) -> Unit): RecyclerView.Adapter<PapaJohnsCodesAdapter.ViewHolder>() {
+class PromoCodesAdapter(private val onItemSelected: (PromoCode) -> Unit): RecyclerView.Adapter<PromoCodesAdapter.ViewHolder>() {
 
-    var data: List<PapaJohnsCode> = emptyList()
+    var data: List<PromoCode> = emptyList()
     get() = field.toList()
     set(value) {
         field = value.toList()
@@ -26,7 +26,7 @@ class PapaJohnsCodesAdapter(private val onItemSelected: (PapaJohnsCode) -> Unit)
         private val codeView = itemView.code
         private val descriptionView = itemView.description
 
-        fun updateWith(code: PapaJohnsCode) {
+        fun updateWith(code: PromoCode) {
             codeView.text = code.rawValue
             descriptionView.text = code.description
 

@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 import retrofit2.http.GET
 
-object PapaJohnsCodesProvider {
+object PromoCodesProvider {
 
     private const val DEFAULT_ENDPOINT = "https://www.papajohns.by"
 
@@ -22,7 +22,7 @@ object PapaJohnsCodesProvider {
             .create<PapaJohnsApi>()
     }
 
-    val codes: Single<List<PapaJohnsCode>> =
+    val codes: Single<List<PromoCode>> =
         api.getCodes()
             .map { it.codes }
             .subscribeOn(Schedulers.io())
@@ -33,6 +33,6 @@ object PapaJohnsCodesProvider {
         @GET("api/stock/codes")
         fun getCodes(): Single<CodesResponse>
 
-        data class CodesResponse(val codes: List<PapaJohnsCode>)
+        data class CodesResponse(val codes: List<PromoCode>)
     }
 }

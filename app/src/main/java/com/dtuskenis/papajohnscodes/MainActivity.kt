@@ -23,7 +23,7 @@ class MainActivity: AppCompatActivity() {
 
         setContentView(R.layout.view_main)
 
-        val codesAdapter = PapaJohnsCodesAdapter(this::copyCodeToClipboard)
+        val codesAdapter = PromoCodesAdapter(this::copyCodeToClipboard)
 
         recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
@@ -40,8 +40,8 @@ class MainActivity: AppCompatActivity() {
         super.onDestroy()
     }
 
-    private fun loadData(receiveData: (List<PapaJohnsCode>) -> Unit) {
-        apiRequest = PapaJohnsCodesProvider.codes
+    private fun loadData(receiveData: (List<PromoCode>) -> Unit) {
+        apiRequest = PromoCodesProvider.codes
             .doOnEvent { _, _ -> loadingIndicator.visibility = View.GONE }
             .subscribeBy(
                 onSuccess = { receiveData(it) },
@@ -54,7 +54,7 @@ class MainActivity: AppCompatActivity() {
         error.message?.let { toast(it) }
     }
 
-    private fun copyCodeToClipboard(code: PapaJohnsCode) {
+    private fun copyCodeToClipboard(code: PromoCode) {
         clipboard.primaryClip = ClipData.newPlainText(getString(R.string.clipboard_label), code.rawValue)
         toast(getString(R.string.clipboard_toast))
     }
