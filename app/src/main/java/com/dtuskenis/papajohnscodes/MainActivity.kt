@@ -2,7 +2,6 @@ package com.dtuskenis.papajohnscodes
 
 import android.content.ClipData
 import android.content.ClipboardManager
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -14,7 +13,8 @@ import kotlinx.android.synthetic.main.view_main.*
 
 class MainActivity: AppCompatActivity() {
 
-    private val clipboard: ClipboardManager by lazy { getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager }
+    private val promoCodesProvider: PromoCodesProvider by lazy { (applicationContext as PromoCodesApplication).promoCodesProvider }
+    private val clipboard: ClipboardManager by lazy { getSystemService(ClipboardManager::class.java) }
 
     private var apiRequest: Disposable? = null
 
@@ -41,7 +41,7 @@ class MainActivity: AppCompatActivity() {
     }
 
     private fun loadData(receiveData: (List<PromoCode>) -> Unit) {
-        apiRequest = PromoCodesProvider.codes
+        apiRequest = promoCodesProvider.codes
             .doOnEvent { _, _ -> loadingIndicator.visibility = View.GONE }
             .subscribeBy(
                 onSuccess = { receiveData(it) },
