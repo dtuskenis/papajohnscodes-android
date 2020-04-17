@@ -2,6 +2,7 @@ package com.dtuskenis.papajohnscodes
 
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -14,7 +15,7 @@ import kotlinx.android.synthetic.main.view_main.*
 class MainActivity: AppCompatActivity() {
 
     private val promoCodesProvider: PromoCodesProvider by lazy { (applicationContext as PromoCodesApplication).promoCodesProvider }
-    private val clipboard: ClipboardManager by lazy { getSystemService(ClipboardManager::class.java) }
+    private val clipboard: ClipboardManager by lazy { getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager }
 
     private var apiRequest: Disposable? = null
 
@@ -55,7 +56,7 @@ class MainActivity: AppCompatActivity() {
     }
 
     private fun copyCodeToClipboard(code: PromoCode) {
-        clipboard.primaryClip = ClipData.newPlainText(getString(R.string.clipboard_label), code.rawValue)
+        clipboard.setPrimaryClip(ClipData.newPlainText(getString(R.string.clipboard_label), code.rawValue))
         toast(getString(R.string.clipboard_toast))
     }
 
