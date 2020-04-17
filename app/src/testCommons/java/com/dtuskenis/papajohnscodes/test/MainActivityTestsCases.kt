@@ -1,6 +1,8 @@
 package com.dtuskenis.papajohnscodes.test
 
+import android.app.Activity
 import android.content.ClipboardManager
+import android.content.Context
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.*
 import androidx.test.espresso.ViewInteraction
@@ -8,19 +10,10 @@ import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.*
 import androidx.test.espresso.contrib.RecyclerViewActions.*
 import androidx.test.espresso.matcher.ViewMatchers.*
-import androidx.test.rule.ActivityTestRule
-import com.dtuskenis.papajohnscodes.MainActivity
 import com.dtuskenis.papajohnscodes.R
 import org.junit.Assert.*
-import org.junit.Rule
-import org.junit.Test
 
-class MainActivityTests {
-
-    @get:Rule
-    val activityRule = ActivityTestRule(MainActivity::class.java)
-
-    private val clipboard: ClipboardManager by lazy { activityRule.activity.getSystemService(ClipboardManager::class.java) }
+object MainActivityTestsCases {
 
     private enum class TestItem(val code: String,
                                 val description: String,
@@ -35,15 +28,18 @@ class MainActivityTests {
         ;
     }
 
-    @Test
-    fun testPromoCodesSelectionWorks() {
+    fun testPromoCodesSelectionWorks(activity: Activity) {
         onView(withId(R.id.recyclerView)).checkIfDisplayed()
 
-        verify(TestItem.POTATO)
-        verify(TestItem.WONDER)
+        val clipboard: ClipboardManager by lazy {
+            activity.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        }
+
+        verify(TestItem.POTATO, clipboard)
+        verify(TestItem.WONDER, clipboard)
     }
 
-    private fun verify(testItem: TestItem) {
+    private fun verify(testItem: TestItem, clipboard: ClipboardManager) {
         onView(withId(R.id.recyclerView)).perform(scrollToPosition<RecyclerView.ViewHolder>(testItem.position))
 
         onView(withText(testItem.code)).checkIfDisplayed()

@@ -3,18 +3,41 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 29
+    def minSdk = 21
+    def maxSdk = 29
+
+    compileSdkVersion maxSdk
 
     defaultConfig {
         applicationId "com.dtuskenis.papajohnscodes"
 
-        minSdkVersion 21
-        targetSdkVersion 29
+        minSdkVersion minSdk
+        targetSdkVersion maxSdk
 
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner ".InstrumentationRunner"
+
+        buildConfigField "int", "MIN_SDK", "$minSdk"
+        buildConfigField "int", "MAX_SDK", "$maxSdk"
+    }
+
+    sourceSets {
+        test {
+            java.srcDir 'src/testCommons/java'
+            resources.srcDir 'src/testCommons/resources'
+        }
+        androidTest {
+            java.srcDir 'src/testCommons/java'
+            resources.srcDir 'src/testCommons/resources'
+        }
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
     }
 }
 
@@ -44,4 +67,10 @@ dependencies {
 
     androidTestImplementation "androidx.test:runner:$androidTestLibrariesVersion"
     androidTestImplementation "androidx.test:rules:$androidTestLibrariesVersion"
+
+    testImplementation "junit:junit:4.12"
+    testImplementation "org.robolectric:robolectric:4.3.1"
+    testImplementation "androidx.test:core:$androidTestLibrariesVersion"
+    testImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
+    testImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
 }
