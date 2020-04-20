@@ -12,10 +12,13 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.view_main.*
 
-class MainActivity: AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
-    private val promoCodesProvider: PromoCodesProvider by lazy { (applicationContext as PromoCodesApplication).promoCodesProvider }
-    private val clipboard: ClipboardManager by lazy { getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager }
+    private val promoCodesProvider: PromoCodesProvider
+            by lazy { (applicationContext as PromoCodesApplication).promoCodesProvider }
+
+    private val clipboard: ClipboardManager
+            by lazy { getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager }
 
     private var apiRequest: Disposable? = null
 
@@ -56,7 +59,10 @@ class MainActivity: AppCompatActivity() {
     }
 
     private fun copyCodeToClipboard(code: PromoCode) {
-        clipboard.setPrimaryClip(ClipData.newPlainText(getString(R.string.clipboard_label), code.rawValue))
+        clipboard.setPrimaryClip(ClipData.newPlainText(
+            getString(R.string.clipboard_label),
+            code.rawValue
+        ))
         toast(getString(R.string.clipboard_toast))
     }
 

@@ -6,17 +6,17 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import io.reactivex.Single
 
-class TestPromoCodesProvider: PromoCodesProvider {
+class TestPromoCodesProvider : PromoCodesProvider {
 
-    private val promoCodesTypeToken = object : TypeToken<List<PromoCode>>(){}
+    private val promoCodesTypeToken = object : TypeToken<List<PromoCode>>() {}
 
     override val codes: Single<List<PromoCode>> =
         Single.fromCallable { loadPromoCodesJson() }
-              .map { parsePromoCodes(it) }
+            .map { parsePromoCodes(it) }
 
     private fun loadPromoCodesJson(): String =
         javaClass.getResourceAsStream("/promo_codes.json")!!
-                 .use { it.bufferedReader().readText() }
+            .use { it.bufferedReader().readText() }
 
     private fun parsePromoCodes(json: String): List<PromoCode> =
         Gson().fromJson(json, promoCodesTypeToken.type)

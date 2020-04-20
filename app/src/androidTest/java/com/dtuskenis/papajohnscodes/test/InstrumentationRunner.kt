@@ -8,12 +8,16 @@ import androidx.test.runner.AndroidJUnitRunner
  * See 'testInstrumentationRunner' in build.gradle
  */
 @Suppress("unused")
-class InstrumentationRunner: AndroidJUnitRunner() {
+class InstrumentationRunner : AndroidJUnitRunner() {
 
-    override fun newApplication(classLoader: ClassLoader,
-                                className: String,
-                                context: Context): Application =
-        super.newApplication(classLoader,
-                             TestApplication::class.java.name,
-                             context)
+    override fun newApplication(
+        classLoader: ClassLoader,
+        className: String,
+        context: Context
+    ): Application =
+        super.newApplication(
+            classLoader,
+            TestApplication::class.java.name,
+            context
+        )
 }

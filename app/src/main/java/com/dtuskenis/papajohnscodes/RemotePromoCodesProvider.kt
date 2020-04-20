@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 import retrofit2.http.GET
 
-object RemotePromoCodesProvider: PromoCodesProvider {
+object RemotePromoCodesProvider : PromoCodesProvider {
 
     private const val DEFAULT_ENDPOINT = "https://www.papajohns.by"
 
