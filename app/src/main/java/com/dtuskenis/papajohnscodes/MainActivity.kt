@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.view_main.*
@@ -27,12 +26,9 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(R.layout.view_main)
 
-        val codesAdapter = PromoCodesAdapter(this::copyCodeToClipboard)
+        val codesAdapter = PromoCodesAdapter(onItemSelected = this::copyCodeToClipboard)
 
-        recyclerView.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = codesAdapter
-        }
+        recyclerView.adapter = codesAdapter
 
         loadData { codesAdapter.data = it }
     }
