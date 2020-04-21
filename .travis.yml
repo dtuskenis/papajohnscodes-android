@@ -1,6 +1,9 @@
 language: android
 dist: trusty
 
+# This is needed since running robolectric on api 29 requires java 9
+jdk: openjdk9
+
 android:
   components:
     - build-tools-28.0.3
@@ -8,4 +11,4 @@ android:
     - extra
 
 script:
-  ./gradlew assembleDebug ktlintCheck
+  - ./gradlew clean testDebug ktlintCheck

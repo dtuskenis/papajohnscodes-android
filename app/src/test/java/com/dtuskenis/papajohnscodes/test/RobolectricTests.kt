@@ -1,6 +1,5 @@
 package com.dtuskenis.papajohnscodes.test
 
-import android.os.Looper
 import androidx.test.core.app.ActivityScenario
 import com.dtuskenis.papajohnscodes.BuildConfig
 import com.dtuskenis.papajohnscodes.MainActivity
@@ -9,8 +8,8 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
+import org.robolectric.shadows.ShadowLooper
 
 @RunWith(RobolectricTestRunner::class)
 @Config(application = TestApplication::class,
@@ -22,12 +21,15 @@ class RobolectricTests {
 
     @Before
     fun setUp() {
+        ShadowLooper.pauseMainLooper()
         scenario = ActivityScenario.launch(MainActivity::class.java)
+        ShadowLooper.unPauseMainLooper()
     }
 
     @After
     fun tearDown() {
-        shadowOf(Looper.getMainLooper()).idle()
+        scenario.close()
+        ShadowLooper.idleMainLooper()
     }
 
     @Test
