@@ -6,5 +6,5 @@ import com.dtuskenis.papajohnscodes.PromoCodesProvider
 class TestApplication : PromoCodesApplication() {
 
     override val promoCodesProvider: PromoCodesProvider
-        get() = TestPromoCodesProvider()
+        get() = TestPromoCodesProvider(json)
 }
