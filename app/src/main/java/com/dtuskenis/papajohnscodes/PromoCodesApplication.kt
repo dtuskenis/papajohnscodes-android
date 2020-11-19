@@ -1,8 +1,13 @@
 package com.dtuskenis.papajohnscodes
 
 import android.app.Application
+import kotlinx.serialization.json.Json
 
 open class PromoCodesApplication : Application() {
 
-    open val promoCodesProvider: PromoCodesProvider = RemotePromoCodesProvider
+    protected val json = Json {
+        ignoreUnknownKeys = true
+    }
+
+    open val promoCodesProvider: PromoCodesProvider = RemotePromoCodesProvider(json)
 }

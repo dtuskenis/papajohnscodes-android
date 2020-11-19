@@ -1,11 +1,13 @@
 package com.dtuskenis.papajohnscodes
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class PromoCode(
-    @SerializedName("name")
+    @SerialName("name")
     private val name: String,
-    @SerializedName("code")
+    @SerialName("code")
     val rawValue: String
 ) {
 
