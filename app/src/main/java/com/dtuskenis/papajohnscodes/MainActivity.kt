@@ -7,9 +7,11 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import io.reactivex.disposables.Disposable
-import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.view_main.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,7 +21,7 @@ class MainActivity : AppCompatActivity() {
     private val clipboard: ClipboardManager
             by lazy { getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager }
 
-    private var apiRequest: Disposable? = null
+    private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,19 +36,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        apiRequest?.dispose()
-        apiRequest = null
+        coroutineScope.cancel()
 
         super.onDestroy()
     }
 
     private fun loadData(receiveData: (List<PromoCode>) -> Unit) {
-        apiRequest = promoCodesProvider.codes
-            .doOnEvent { _, _ -> loadingIndicator.visibility = View.GONE }
-            .subscribeBy(
-                onSuccess = { receiveData(it) },
-                onError = { handleError(it) }
-            )
+        coroutineScope.launch {
+            try {
+                receiveData(promoCodesProvider.getCodes())
+            } catch (error: Throwable) {
+                handleError(error)
+            }
+        }.invokeOnCompletion {
+            loadingIndicator.visibility = View.GONE
+        }
     }
 
     private fun handleError(error: Throwable) {
