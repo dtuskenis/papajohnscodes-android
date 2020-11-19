@@ -21,9 +21,8 @@ class RobolectricTests {
 
     @Before
     fun setUp() {
-        ShadowLooper.pauseMainLooper()
         scenario = ActivityScenario.launch(MainActivity::class.java)
-        ShadowLooper.unPauseMainLooper()
+        ShadowLooper.idleMainLooper()
     }
 
     @After
