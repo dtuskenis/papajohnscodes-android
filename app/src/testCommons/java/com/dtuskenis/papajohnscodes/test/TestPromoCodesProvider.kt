@@ -4,15 +4,13 @@ import com.dtuskenis.papajohnscodes.PromoCode
 import com.dtuskenis.papajohnscodes.PromoCodesProvider
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import io.reactivex.Single
 
 class TestPromoCodesProvider : PromoCodesProvider {
 
     private val promoCodesTypeToken = object : TypeToken<List<PromoCode>>() {}
 
-    override val codes: Single<List<PromoCode>> =
-        Single.fromCallable { loadPromoCodesJson() }
-            .map { parsePromoCodes(it) }
+    override suspend fun getCodes(): List<PromoCode> =
+        parsePromoCodes(json = loadPromoCodesJson())
 
     private fun loadPromoCodesJson(): String =
         javaClass.getResourceAsStream("/promo_codes.json")!!
