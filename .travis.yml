@@ -11,4 +11,4 @@ android:
     - extra
 
 script:
-  - ./gradlew clean testDebug ktlintCheck
+  - ./gradlew clean ktlintCheck testRelease
