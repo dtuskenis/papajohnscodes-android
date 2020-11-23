@@ -10,20 +10,13 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
 
-    private val application: PromoCodesApplication
-            by lazy { applicationContext as PromoCodesApplication }
-
-    private val clipboard: ClipboardManager
-            by lazy { application.clipboardManager }
-
-    private val promoCodesProvider: PromoCodesProvider
-            by lazy { application.promoCodesProvider }
-
-    private val toastDisplay
-            by lazy { application.toastDisplay }
+    private val clipboard: ClipboardManager by inject()
+    private val promoCodesProvider: PromoCodesProvider by inject()
+    private val toastDisplay: ToastDisplay by inject()
 
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
