@@ -2,7 +2,6 @@ package com.dtuskenis.papajohnscodes.test
 
 import android.app.Activity
 import android.content.ClipboardManager
-import android.content.Context
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.ViewInteraction
@@ -15,6 +14,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.dtuskenis.papajohnscodes.R
 import org.junit.Assert.assertEquals
+import org.koin.android.ext.android.get
 
 object MainActivityTestsCases {
 
@@ -38,9 +38,7 @@ object MainActivityTestsCases {
     fun testPromoCodesSelectionWorks(activity: Activity) {
         onView(withId(R.id.recyclerView)).checkIfDisplayed()
 
-        val clipboard: ClipboardManager by lazy {
-            activity.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        }
+        val clipboard = activity.get<ClipboardManager>()
 
         verify(TestItem.POTATO, clipboard)
         verify(TestItem.WONDER, clipboard)
