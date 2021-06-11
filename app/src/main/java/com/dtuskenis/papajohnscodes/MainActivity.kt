@@ -2,22 +2,19 @@ package com.dtuskenis.papajohnscodes
 
 import android.content.ClipData
 import android.content.ClipboardManager
-import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.coroutineScope
 import kotlinx.android.synthetic.main.view_main.*
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
 
-    private val promoCodesProvider: PromoCodesProvider
-            by lazy { (applicationContext as PromoCodesApplication).promoCodesProvider }
-
-    private val clipboard: ClipboardManager
-            by lazy { getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager }
+    private val clipboard: ClipboardManager by inject()
+    private val promoCodesProvider: PromoCodesProvider by inject()
+    private val toastDisplay: ToastDisplay by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +42,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleError(error: Throwable) {
         error.printStackTrace()
-        error.message?.let { toast(it) }
+        error.message?.let { toastDisplay.showToast(it) }
     }
 
     private fun copyCodeToClipboard(code: PromoCode) {
@@ -53,10 +50,6 @@ class MainActivity : AppCompatActivity() {
             getString(R.string.clipboard_label),
             code.rawValue
         ))
-        toast(getString(R.string.clipboard_toast))
-    }
-
-    private fun toast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+        toastDisplay.showToast(getString(R.string.clipboard_toast))
     }
 }
